@@ -1,0 +1,660 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday My Love</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap');
+        
+        :root {
+            --primary: #ff85a2;
+            --secondary: #ffd9e3;
+            --accent: #ff4785;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #fff9fb;
+            color: #333;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            height: 100vh;
+            min-height: 600px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path fill="%23ffffff" fill-opacity="0.1" d="M30,50 Q50,30 70,50 T90,50 T70,50 T50,50 T30,50 Z"></path></svg>');
+            opacity: 0.1;
+            pointer-events: none;
+        }
+        
+        .photo-frame {
+            border: 15px solid white;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15), 0 0 0 10px rgba(255,255,255,0.3);
+            transform: perspective(1000px) rotateY(0deg);
+            transition: all 0.5s ease;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .photo-frame::after {
+            content: "";
+            position: absolute;
+            top: -25px;
+            left: -25px;
+            right: -25px;
+            bottom: -25px;
+            border: 2px dashed rgba(255,255,255,0.5);
+            border-radius: 15px;
+            z-index: -1;
+            animation: rotate 20s linear infinite;
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .photo-frame:hover {
+            transform: perspective(1000px) rotateY(10deg) scale(1.03);
+        }
+        
+        .message-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transform: translateY(0);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .message-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+        
+        .message-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .heart {
+            position: absolute;
+            pointer-events: none;
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+        
+        .photo-carousel {
+            scroll-behavior: smooth;
+            scroll-snap-type: x mandatory;
+        }
+        
+        .photo-carousel img {
+            scroll-snap-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .photo-carousel img:hover {
+            transform: scale(1.02);
+        }
+        
+        .flip-card {
+            perspective: 1000px;
+        }
+        
+        .flip-card-inner {
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .flip-card-front, .flip-card-back {
+            backface-visibility: hidden;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .flip-card-back {
+            transform: rotateY(180deg);
+        }
+        
+        @keyframes confetti {
+            0% { transform: translateY(-100vh) rotate(0deg); }
+            100% { transform: translateY(100vh) rotate(360deg); }
+        }
+        
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            opacity: 0;
+            animation: confetti 5s linear forwards;
+            z-index: 1000;
+        }
+        
+        @keyframes fall-rose {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(300px) rotate(360deg); opacity: 0; }
+        }
+        
+        .birthday-cake {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 40px;
+            animation: bounce 2s infinite;
+            z-index: 10;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .balloon {
+            position: absolute;
+            animation: float-up 8s linear infinite;
+            z-index: 1;
+        }
+        
+        @keyframes float-up {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-100vh) rotate(360deg); }
+        }
+        
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            animation: sparkle 2s infinite;
+        }
+        
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+        
+        .section-divider {
+            position: relative;
+            height: 100px;
+            overflow: hidden;
+        }
+        
+        .section-divider::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            height: 100px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M1200 120L0 16.48 0 0 1200 0 1200 120z" fill="%23ffd9e3"></path></svg>');
+            background-size: cover;
+            transform: rotate(180deg);
+        }
+        
+        /* New styles for response message */
+        #response-message {
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Page transition effect */
+        .page-transition {
+            opacity: 0;
+            transition: opacity 0.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Balloons -->
+    <div class="balloon" style="left: 10%; font-size: 30px; animation-delay: 0s; color: #ffb8c6;">🎈</div>
+    <div class="balloon" style="left: 20%; font-size: 40px; animation-delay: 2s; color: #ff85a2;">🎈</div>
+    <div class="balloon" style="left: 30%; font-size: 35px; animation-delay: 4s; color: #ffffff;">🎈</div>
+    <div class="balloon" style="right: 10%; font-size: 45px; animation-delay: 1s; color: #ffb8c6;">🎈</div>
+    <div class="balloon" style="right: 20%; font-size: 30px; animation-delay: 3s; color: #ffffff;">🎈</div>
+    <div class="balloon" style="right: 30%; font-size: 40px; animation-delay: 5s; color: #ff85a2;">🎈</div>
+    
+    <!-- Birthday Cake -->
+    <div class="birthday-cake">🎂</div>
+    
+    <!-- Sparkles -->
+    <div id="sparkles-container"></div>
+    
+    <div class="hero relative flex flex-col items-center justify-center text-center px-4 overflow-hidden">
+        <div class="absolute w-full h-full overflow-hidden">
+            <div id="hearts-container"></div>
+        </div>
+        <div class="z-10">
+            <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 animate-bounce">Happy Birthday!</h1>
+            <div class="photo-frame bg-white rounded-lg overflow-hidden mb-8 mx-auto w-72 h-72 md:w-96 md:h-96">
+                <img src="main.jpg" alt="Beautiful portrait of my wife smiling, wearing elegant dress with soft lighting" class="w-full h-full object-cover" />
+            </div>
+            <h2 class="text-4xl md:text-5xl text-white font-bold mb-2">To My Beautiful Wife</h2>
+            <p class="text-xl text-white max-w-3xl mx-auto">On your special day, I want you to know how much you mean to me.</p>
+            
+            <div class="mt-8">
+                <button id="emoji-btn" class="bg-white text-pink-600 font-bold py-3 px-8 rounded-full hover:shadow-lg transition-all transform hover:scale-110">
+                    😍 
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Section Divider -->
+    <div class="section-divider"></div>
+    
+    <section class="py-20 px-4 max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Why You're Special</h2>
+            <div class="w-24 h-1 bg-pink-400 mx-auto"></div>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="message-card p-8">
+                <div class="text-center mb-4">
+                    <i class="fas fa-heart text-4xl text-pink-500"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-center mb-4">Your Heart</h3>
+                <p class="text-gray-600">Your kindness and compassion touch everyone you meet. You have the biggest heart of anyone I know.</p>
+            </div>
+            
+            <div class="message-card p-8">
+                <div class="text-center mb-4">
+                    <i class="fas fa-laugh-beam text-4xl text-pink-500"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-center mb-4">Your Joy</h3>
+                <p class="text-gray-600">Your laugh lights up my world. Your positivity and sense of humor make every day brighter.</p>
+            </div>
+            
+            <div class="message-card p-8">
+                <div class="text-center mb-4">
+                    <i class="fas fa-star text-4xl text-pink-500"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-center mb-4">Your Strength</h3>
+                <p class="text-gray-600">You're the strongest person I know. You handle challenges with grace and determination that inspires me.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Section Divider -->
+    <div class="gifitid"></div>
+    
+    <section class="py-20 bg-pink-50">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Our Memories</h2>
+                <div class="w-24 h-1 bg-pink-400 mx-auto"></div>
+            </div>
+            
+            <div class="photo-carousel flex overflow-x-auto gap-4 pb-8 snap-x" style="scroll-snap-type: x mandatory;">
+                <div class="flex-none w-4/5 md:w-1/3 snap-center">
+                    <img src="1st.webp" alt="Couple on vacation at the beach, smiling with sunset in background" class="w-full h-64 md:h-80 object-cover rounded-lg" />
+                </div>
+                <div class="flex-none w-4/5 md:w-1/3 snap-center">
+                    <img src="2nd.jpg" alt="Anniversary dinner at fancy restaurant with candlelight and wine glasses" class="w-full h-64 md:h-80 object-cover rounded-lg" />
+                </div>
+                <div class="flex-none w-4/5 md:w-1/3 snap-center">
+                    <img src="3rd.jpg" alt="Casual day at home cooking together in the kitchen" class="w-full h-64 md:h-80 object-cover rounded-lg" />
+                </div>
+                <div class="flex-none w-4/5 md:w-1/3 snap-center">
+                    <img src="4th.jpg" alt="Winter vacation holding hands while walking through snowy park" class="w-full h-64 md:h-80 object-cover rounded-lg" />
+                </div>
+            </div>
+            
+            <div class="text-center mt-8">
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    These are just a few of the countless precious moments we've shared. I cherish each memory and look forward to creating many more.
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Section Divider -->
+    <div class="section-divider"></div>
+    
+    <section class="py-20 px-4 max-w-4xl mx-auto">
+        <div class="flip-card w-full h-96 mx-auto">
+            <div class="flip-card-inner w-full h-full">
+                <div class="flip-card-front bg-gradient-to-r from-pink-400 to-pink-600 rounded-lg flex items-center justify-center">
+                    <div class="text-center p-8">
+                        <i class="fas fa-envelope text-6xl text-white mb-4"></i>
+                        <h3 class="text-3xl font-bold text-white">A Special Note For You</h3>
+                        <p class="text-white mt-2">Click or hover to open</p>
+                    </div>
+                </div>
+                <div class="flip-card-back bg-white rounded-lg flex items-center justify-center p-8">
+                    <div>
+                        <p class="text-lg md:text-xl text-gray-700 italic leading-relaxed">
+                            "My love, on your birthday I want you to know that you are the most beautiful person I know - inside and out. Every day with you is a gift I don't take for granted. Thank you for your love, patience, and all the ways you make my life better. I love you more than words can express. Happy Birthday my beautiful wife!"
+                        </p>
+                        <p class="mt-8 text-right text-gray-600">
+                            - Your Loving Partner
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Section Divider -->
+    <div class="section-divider"></div>
+    
+    <!-- GIFT SECTION -->
+    <section class="py-20 bg-gradient-to-b from-pink-50 to-white">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Your Special Gift</h2>
+                <div class="w-24 h-1 bg-pink-400 mx-auto"></div>
+                <p class="mt-6 text-gray-600">A little something to show my love...</p>
+            </div>
+
+            <!-- Gift Box -->
+            <div class="relative w-64 h-64 mx-auto mb-12 cursor-pointer transform hover:scale-105 transition-transform duration-300" id="gift-box">
+                <!-- Closed Box -->
+                <div class="absolute inset-0 bg-gradient-to-r from-pink-500 to-pink-600 rounded-lg shadow-xl" id="closed-box">
+                    <div class="absolute top-0 left-0 right-0 h-8 bg-pink-700 rounded-t-lg"></div>
+                    <div class="absolute top-8 left-1/4 w-32 h-4 bg-pink-300"></div>
+                    <div class="flex flex-col items-center justify-center h-full pt-8">
+                        <i class="fas fa-gift text-6xl text-white"></i>
+                        <p class="text-white font-bold mt-4">Click to Open!</p>
+                    </div>
+                </div>
+                
+                <!-- Opened Box (hidden initially) -->
+                <div class="absolute inset-0 bg-white rounded-lg shadow-xl hidden flex-col items-center justify-center p-6" id="opened-box">
+                    <div class="text-pink-500 mb-4">
+                        <i class="fas fa-heart text-6xl animate-pulse"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-2">The Gift of Forever</h3>
+                    <p class="text-gray-600 mb-4">My darling, this isn't just any gift...</p>
+                    
+                    <div class="bg-pink-100 rounded-lg p-4 w-full">
+                        <div class="flex items-center">
+                            <i class="fas fa-heart text-pink-500 text-2xl mr-3"></i>
+                            <div>
+                                <p class="font-bold text-pink-600">Will You Marry Me?</p>
+                                <p class="text-sm text-gray-600">Let's make our love story official</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center mt-3">
+                            <i class="fas fa-calendar-alt text-pink-500 text-2xl mr-3"></i>
+                            <div>
+                                <p class="font-bold text-pink-600">Our Future Together</p>
+                                <p class="text-sm text-gray-600">A lifetime of love and happiness</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 flex space-x-4 justify-center">
+                        <button id="yes-btn" class="bg-pink-500 text-white px-6 py-2 rounded-full hover:bg-pink-600 transition transform hover:scale-110">Yes! 💍</button>
+                        <button id="absolutely-btn" class="bg-pink-500 text-white px-6 py-2 rounded-full hover:bg-pink-600 transition transform hover:scale-110">Absolutely! ❤️</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Response Message -->
+            <div id="response-message" class="hidden mt-8 bg-white p-8 rounded-lg shadow-lg max-w-md mx-auto border border-pink-200">
+                <div class="text-center">
+                    <i class="fas fa-heart text-5xl text-pink-500 mb-4 animate-pulse"></i>
+                    <h3 id="response-title" class="text-2xl font-bold text-gray-800 mb-2"></h3>
+                    <p id="response-text" class="text-gray-600 mb-6"></p>
+                    <button id="close-response" class="text-pink-500 hover:text-pink-600 font-medium">
+                        <i class="fas fa-times mr-1"></i> Close
+                    </button>
+                </div>
+            </div>
+
+            <!-- Virtual Roses -->
+            <div class="max-w-lg mx-auto relative h-40" id="rose-garden">
+                <!-- Roses will appear here when gift is opened -->
+            </div>
+            
+            <div class="mt-12 bg-white p-8 rounded-lg shadow-md max-w-2xl mx-auto">
+                <h3 class="text-2xl font-bold text-pink-600 mb-4">My Promise To You</h3>
+                <p class="text-gray-700 mb-4 italic">
+                    "My love, this ring represents my commitment to cherish you every day of our lives together. I promise to be your partner in all things, to support you, to laugh with you, and to love you unconditionally."
+                </p>
+                <div class="flex justify-center mt-6">
+                    <div class="w-16 h-1 bg-pink-300"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Section Divider -->
+    <div class="section-divider"></div>
+    
+    <footer class="bg-pink-900 text-white py-12 px-4">
+        <div class="max-w-6xl mx-auto text-center">
+            <h2 class="text-3xl font-bold mb-6">Happy Birthday My Love</h2>
+            <p class="mb-8">May this year bring you all the happiness you bring to others every day.</p>
+            
+            <p class="text-pink-300">Made with love ❤️</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Create floating hearts
+        function createHearts() {
+            const container = document.getElementById('hearts-container');
+            const colors = ['#ff85a2', '#ffb8c6', '#ffd9e3', '#ffffff'];
+            
+            for (let i = 0; i < 30; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.top = Math.random() * 100 + 'vh';
+                heart.style.fontSize = (Math.random() * 25 + 15) + 'px';
+                heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+                heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                heart.style.animationDelay = (Math.random() * 5) + 's';
+                container.appendChild(heart);
+            }
+        }
+        
+        // Create floating balloons
+        function createBalloons() {
+            const colors = ['#ff85a2', '#ffb8c6', '#ff4785', '#ffd9e3', '#ffffff'];
+            const types = ['🎈', '🎈', '🎈', '🎈', '🎈'];
+            
+            for (let i = 0; i < 10; i++) {
+                const balloon = document.createElement('div');
+                balloon.classList.add('balloon');
+                balloon.innerHTML = types[Math.floor(Math.random() * types.length)];
+                balloon.style.left = Math.random() * 100 + 'vw';
+                balloon.style.fontSize = (Math.random() * 30 + 20) + 'px';
+                balloon.style.color = colors[Math.floor(Math.random() * colors.length)];
+                balloon.style.animationDuration = (Math.random() * 10 + 5) + 's';
+                balloon.style.animationDelay = (Math.random() * 5) + 's';
+                document.body.appendChild(balloon);
+            }
+        }
+        
+        // Create sparkles
+        function createSparkles() {
+            const container = document.getElementById('sparkles-container') || document.body;
+            
+            for (let i = 0; i < 50; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.classList.add('sparkle');
+                sparkle.style.left = Math.random() * 100 + 'vw';
+                sparkle.style.top = Math.random() * 100 + 'vh';
+                sparkle.style.animationDelay = (Math.random() * 5) + 's';
+                sparkle.style.width = (Math.random() * 6 + 2) + 'px';
+                sparkle.style.height = sparkle.style.width;
+                container.appendChild(sparkle);
+            }
+        }
+        
+        // Confetti effect
+        function createConfetti() {
+            const colors = ['#ff85a2', '#ffb8c6', '#ffd9e3', '#ffffff', '#f8e1e7'];
+            
+            for (let i = 0; i < 150; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.opacity = Math.random();
+                confetti.style.animationDelay = Math.random() * 5 + 's';
+                confetti.style.width = Math.random() * 10 + 5 + 'px';
+                confetti.style.height = Math.random() * 10 + 5 + 'px';
+                document.body.appendChild(confetti);
+                
+                setTimeout(() => {
+                    confetti.remove();
+                }, 5000);
+            }
+        }
+        
+        // Gift Box Interaction
+        const giftBox = document.getElementById('gift-box');
+        const closedBox = document.getElementById('closed-box');
+        const openedBox = document.getElementById('opened-box');
+        const roseGarden = document.getElementById('rose-garden');
+
+        if (giftBox) {
+            giftBox.addEventListener('click', function() {
+                closedBox.classList.add('hidden');
+                openedBox.classList.remove('hidden');
+                openedBox.classList.add('flex');
+                createRoses();
+                createConfetti();
+            });
+        }
+
+        function createRoses() {
+            const roseColors = ['#ff85a2', '#ffb8c6', '#ff4785', '#ffd9e3'];
+            
+            for (let i = 0; i < 15; i++) {
+                const rose = document.createElement('div');
+                rose.innerHTML = '🌹';
+                rose.style.position = 'absolute';
+                rose.style.left = Math.random() * 100 + '%';
+                rose.style.top = '-50px';
+                rose.style.fontSize = (Math.random() * 20 + 20) + 'px';
+                rose.style.color = roseColors[Math.floor(Math.random() * roseColors.length)];
+                rose.style.animation = `fall-rose ${Math.random() * 3 + 2}s linear forwards`;
+                rose.style.animationDelay = (Math.random() * 1) + 's';
+                roseGarden.appendChild(rose);
+            }
+        }
+        
+        // Response message functionality
+        const yesBtn = document.getElementById('yes-btn');
+        const absolutelyBtn = document.getElementById('absolutely-btn');
+        const responseMessage = document.getElementById('response-message');
+        const responseTitle = document.getElementById('response-title');
+        const responseText = document.getElementById('response-text');
+        const closeResponse = document.getElementById('close-response');
+
+        if (yesBtn && absolutelyBtn) {
+            yesBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                responseTitle.textContent = "You Said Yes!";
+                responseText.textContent = "This is the happiest day of my life! I can't wait to spend forever with you. I love you more than words can express!";
+                responseMessage.style.display = 'block';
+                setTimeout(() => {
+                    responseMessage.classList.remove('hidden');
+                }, 10);
+                createConfetti();
+            });
+
+            absolutelyBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                responseTitle.textContent = "You Said Absolutely!";
+                responseText.textContent = "My heart is overflowing with joy! You've made me the luckiest person in the world. Our forever starts now!";
+                responseMessage.style.display = 'block';
+                setTimeout(() => {
+                    responseMessage.classList.remove('hidden');
+                }, 10);
+                createConfetti();
+            });
+
+            closeResponse.addEventListener('click', function(e) {
+                e.stopPropagation();
+                responseMessage.classList.add('hidden');
+                setTimeout(() => {
+                    responseMessage.style.display = 'none';
+                }, 500);
+            });
+        }
+        
+        // Emoji button click handler
+        document.getElementById('emoji-btn').addEventListener('click', function() {
+            // Add transition effect
+            document.body.classList.add('page-transition');
+            
+            // Redirect after transition completes
+            setTimeout(function() {
+                window.location.href = "cute.html"; // Change this to your desired page
+            }, 500);
+        });
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            createHearts();
+            createBalloons();
+            createSparkles();
+            
+            const carousel = document.querySelector('.photo-carousel');
+            if (carousel) {
+                let scrollAmount = 0;
+                setInterval(() => {
+                    scrollAmount += carousel.clientWidth * 0.8;
+                    if (scrollAmount >= carousel.scrollWidth) {
+                        scrollAmount = 0;
+                    }
+                    carousel.scrollTo({
+                        left: scrollAmount,
+                        behavior: 'smooth'
+                    });
+                }, 5000);
+            }
+        });
+    </script>
+</body>
+</html>
